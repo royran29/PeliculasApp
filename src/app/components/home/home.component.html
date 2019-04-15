@@ -1,3 +1,16 @@
-<p>
-  home works!
-</p>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Peliculas AAP</h1>
+    <p class="lead">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita voluptate non est reiciendis ipsa qui suscipit, quibusdam libero? Animi corrupti quia, cupiditate incidunt cumque dolorem! Vero maxime repellat perspiciatis odio!</p>
+  </div>
+</div>
+
+<div class="container">
+
+    <app-galeria [peliculas]="cartelera | slice:0:6" titulo="Cartelera"></app-galeria>
+
+    <app-galeria [peliculas]="populares | slice:0:6" titulo="Populares"></app-galeria>
+
+    <app-galeria [peliculas]="kids | slice:0:6" titulo="Populares Niños"></app-galeria>
+
+</div>

@@ -15,15 +15,35 @@ export class PeliculasService {
 
   constructor(private _http: HttpClient) { }
 
+  getCartelera() {
+
+    const desde = new Date();
+    const hasta = new Date();
+    hasta.setDate( hasta.getDate() + 7 );
+
+    const desdeStr = `${desde.getFullYear()}-${desde.getMonth() + 1}-${desde.getDate()}`;
+    const hastaStr = `${hasta.getFullYear()}-${hasta.getMonth() + 1}-${hasta.getDate()}`;
+
+    const url = `${ this.moviesDbUrl }/discover/movie?primary_release_date.gte=${ desdeStr }&primary_release_date.lte=${ hastaStr }&api_key=${ this.apiKey }&language=es&callback=JSONP_CALLBACK`;
+
+    return this._http.jsonp(url, '').pipe(map(data => data.results));
+  }
+
   getPopulares() {
     const url = `${ this.moviesDbUrl }/discover/movie?sort_by=popularity.desc&api_key=${ this.apiKey }&language=es&callback=JSONP_CALLBACK`;
 
-    return this._http.jsonp(url, '').pipe(map(data => data));
+    return this._http.jsonp(url, '').pipe(map(data => data.results));
+  }
+
+  getPopularesKids() {
+    const url = `${ this.moviesDbUrl }/discover/movie?certification_country=US&certification.lte=G&sort_by=popularity.desc&api_key=${ this.apiKey }&language=es&callback=JSONP_CALLBACK`;
+
+    return this._http.jsonp(url, '').pipe(map(data => data.results));
   }
 
   buscarPelicula(texto: string){
     const url = `${ this.moviesDbUrl }/search/movie?query=${ texto }&sort_by=popularity.desc&api_key=${ this.apiKey }&language=es&callback=JSONP_CALLBACK`;
 
-    return this._http.jsonp(url, '').pipe(map(data => data));
+    return this._http.jsonp(url, '').pipe(map(data => data.results));
   }
 }

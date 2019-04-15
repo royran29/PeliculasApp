@@ -9,7 +9,7 @@ import { PeliculasService } from './services/peliculas.service';
 export class AppComponent {
   title = 'PeliculasApp';
 
-  constructor(private _ps: PeliculasService){
-    this._ps.getPopulares().subscribe( data => console.log(data));
+  constructor(private _ps: PeliculasService) {
+
   }
 }
