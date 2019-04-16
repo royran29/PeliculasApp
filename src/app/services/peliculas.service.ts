@@ -11,6 +11,8 @@ export class PeliculasService {
   private apiKey = '125c08ec7a147cb590406a7e04c754b9';
   private moviesDbUrl = 'https://api.themoviedb.org/3'; // movie/550
 
+  public peliculas: any[] = [];
+
   // path para imagenes image.tmdb.org/t/p/w300/
 
   constructor(private _http: HttpClient) { }
@@ -41,9 +43,19 @@ export class PeliculasService {
     return this._http.jsonp(url, '').pipe(map(data => data.results));
   }
 
-  buscarPelicula(texto: string){
+  buscarPelicula(texto: string) {
     const url = `${ this.moviesDbUrl }/search/movie?query=${ texto }&sort_by=popularity.desc&api_key=${ this.apiKey }&language=es&callback=JSONP_CALLBACK`;
 
-    return this._http.jsonp(url, '').pipe(map(data => data.results));
+    return this._http.jsonp(url, '').pipe(map(data => {
+      this.peliculas = data['results'];
+      return data.results;
+    }));
+  }
+
+  getPelicula(id: string) {
+
+    const url = `${ this.moviesDbUrl }/movie/${ id }?api_key=${ this.apiKey }&language=es&callback=JSONP_CALLBACK`;
+
+    return this._http.jsonp(url, '').pipe(map(data => data));
   }
 }
